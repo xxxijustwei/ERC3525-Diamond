@@ -37,10 +37,10 @@ contract DiamondInit {
     // You can add parameters to this function in order to pass in 
     // data to set your own state variables
     function init(SFTConfig memory config) external {
-        ERC3525Storage.AppStorage storage s = ERC3525Storage.layout();
-        s.name = config.name;
-        s.symbol = config.symbol;
-        s.decimals = config.decimals;
+        ERC3525Storage.AppStorage storage layout = ERC3525Storage.layout();
+        layout.name = config.name;
+        layout.symbol = config.symbol;
+        layout.decimals = config.decimals;
 
         // adding ERC165 data
         LibDiamond.DiamondStorage storage ds = LibDiamond.diamondStorage();
