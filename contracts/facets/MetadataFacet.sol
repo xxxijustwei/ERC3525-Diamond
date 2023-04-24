@@ -6,14 +6,14 @@ import "@openzeppelin/contracts/utils/Strings.sol";
 import "@openzeppelin/contracts/utils/Base64.sol";
 
 import { ERC3525Storage } from "../storage/ERC3525Storage.sol";
-import { Substrate } from "../Substrate.sol";
+import { Explorable } from "../abstract/Explorable.sol";
 
-contract ERC3525MetadataFacet is Substrate {
+contract MetadataFacet is Explorable {
 
-    using Strings for uint256;
+    using Strings for uint;
 
-    function tokenURI(uint256 tokenId_) external view returns (string memory) {
-        _requireMinted(tokenId_);
+    function tokenURI(uint _tokenId) external view virtual returns (string memory) {
+        _requireMinted(_tokenId);
         return 
             string(
                 abi.encodePacked(
@@ -22,17 +22,17 @@ contract ERC3525MetadataFacet is Substrate {
                         abi.encodePacked(
                             /* solhint-disable */
                             '{"name":"',
-                            _tokenName(tokenId_),
+                            _tokenName(_tokenId),
                             '","description":"',
-                            _tokenDescription(tokenId_),
+                            _tokenDescription(_tokenId),
                             '","image":"',
-                            _tokenImage(tokenId_),
+                            _tokenImage(_tokenId),
                             '","balance":"',
-                            _balanceOf(tokenId_).toString(),
+                            _balanceOf(_tokenId).toString(),
                             '","slot":"',
-                            _slotOf(tokenId_).toString(),
+                            _slotOf(_tokenId).toString(),
                             '","properties":',
-                            _tokenProperties(tokenId_),
+                            _tokenProperties(_tokenId),
                             "}"
                             /* solhint-enable */
                         )
@@ -41,8 +41,8 @@ contract ERC3525MetadataFacet is Substrate {
             );
     }
 
-    function contractURI() external view returns (string memory) {
-        ERC3525Storage.AppStorage storage s = ERC3525Storage.get();
+    function contractURI() external view virtual returns (string memory) {
+        ERC3525Storage.AppStorage storage layout = ERC3525Storage.layout();
         return 
             string(
                 abi.encodePacked(
@@ -51,13 +51,13 @@ contract ERC3525MetadataFacet is Substrate {
                     Base64.encode(
                         abi.encodePacked(
                             '{"name":"', 
-                            s.name,
+                            layout.name,
                             '","description":"',
                             _contractDescription(),
                             '","image":"',
                             _contractImage(),
                             '","valueDecimals":"', 
-                            uint(s.decimals).toString(),
+                            uint(layout.decimals).toString(),
                             '"}'
                         )
                     )
@@ -66,7 +66,7 @@ contract ERC3525MetadataFacet is Substrate {
             );
     }
 
-    function slotURI(uint256 slot_) external view returns (string memory) {
+    function slotURI(uint slot_) external view virtual returns (string memory) {
         return
             string(
                 abi.encodePacked(
@@ -90,29 +90,29 @@ contract ERC3525MetadataFacet is Substrate {
             );
     }
 
-    function _tokenName(uint256 tokenId_) internal view virtual returns (string memory) {
+    function _tokenName(uint _tokenId) internal view virtual returns (string memory) {
         // solhint-disable-next-line
         return 
             string(
                 abi.encodePacked(
-                    ERC3525Storage.get().name, 
-                    " #", tokenId_.toString()
+                    ERC3525Storage.layout().name, 
+                    " #", _tokenId.toString()
                 )
             );
     }
 
-    function _tokenDescription(uint256 tokenId_) internal view virtual returns (string memory) {
-        tokenId_;
+    function _tokenDescription(uint _tokenId) internal view virtual returns (string memory) {
+        _tokenId;
         return "";
     }
 
-    function _tokenImage(uint256 tokenId_) internal view virtual returns (bytes memory) {
-        tokenId_;
+    function _tokenImage(uint _tokenId) internal view virtual returns (bytes memory) {
+        _tokenId;
         return "";
     }
 
-    function _tokenProperties(uint256 tokenId_) internal view virtual returns (string memory) {
-        tokenId_;
+    function _tokenProperties(uint _tokenId) internal view virtual returns (string memory) {
+        _tokenId;
         return "{}";
     }
 
@@ -124,22 +124,22 @@ contract ERC3525MetadataFacet is Substrate {
         return "";
     }
 
-    function _slotName(uint256 slot_) internal view virtual returns (string memory) {
+    function _slotName(uint slot_) internal view virtual returns (string memory) {
         slot_;
         return "";
     }
 
-    function _slotDescription(uint256 slot_) internal view virtual returns (string memory) {
+    function _slotDescription(uint slot_) internal view virtual returns (string memory) {
         slot_;
         return "";
     }
 
-    function _slotImage(uint256 slot_) internal view virtual returns (bytes memory) {
+    function _slotImage(uint slot_) internal view virtual returns (bytes memory) {
         slot_;
         return "";
     }
 
-    function _slotProperties(uint256 slot_) internal view virtual returns (string memory) {
+    function _slotProperties(uint slot_) internal view virtual returns (string memory) {
         slot_;
         return "[]";
     }

@@ -6,8 +6,8 @@ import "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-import { IERC3525Receiver } from "../../interfaces/erc3525/IERC3525Receiver.sol";
-import { IERC165 } from "../../interfaces/IERC165.sol";
+import { IERC3525Receiver } from "../interfaces/erc3525/IERC3525Receiver.sol";
+import { IERC165 } from "../interfaces/IERC165.sol";
 
 import { ERC3525Storage } from "../storage/ERC3525Storage.sol";
 import { Approvable } from "../abstract/Approvable.sol";

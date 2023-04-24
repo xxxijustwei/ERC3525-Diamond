@@ -15,18 +15,15 @@ library ERC3525Storage {
 
         Counters.Counter tokenIdGenerator;
 
-        TokenData[] allTokens;
-
-        uint[20] gaps;
-
-        mapping(uint256 => mapping(address => uint256)) approvedValues;
-        mapping(uint256 => uint256) allTokensIndex;
-        mapping(address => AddressData) addressData;
+        // tokenId => TokenData
+        mapping(uint => TokenData) tokens;
+        // address => Account
+        mapping(address => Account) accounts;
     }
 
     bytes32 constant STORAGE_POSITION = keccak256("erc3525.solv.standard.storage");
 
-    function get() internal pure returns (AppStorage storage s) {
+    function layout() internal pure returns (AppStorage storage s) {
         bytes32 position = STORAGE_POSITION;
         assembly {
             s.slot := position

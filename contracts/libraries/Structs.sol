@@ -8,13 +8,13 @@ struct TokenData {
     uint256 balance;
     address owner;
     address approved;
-    address[] valueApprovals;
 }
 
-struct AddressData {
+struct Account {
     uint256[] ownedTokens;
     mapping(uint256 => uint256) ownedTokensIndex;
-    mapping(address => bool) approvals;
+    mapping(address => bool) operatorApprovals;
+    mapping(uint => mapping(address => uint)) tokenApprovals;
 }
 
 struct SlotData {
