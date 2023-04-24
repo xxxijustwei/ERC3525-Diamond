@@ -10,6 +10,7 @@ const {
   DEFAULT_NETWORK,
   MNEMONIC,
   MOONBEAM_API_KEY,
+  POLYGON_API_KEY
 } = process.env;
 
 const accounts = {
@@ -37,7 +38,7 @@ const config: HardhatUserConfig = {
       chainId: 1287,
       accounts: accounts
     },
-    mumbai: {
+    polygonMumbai: {
       url: 'https://rpc.ankr.com/polygon_mumbai',
       chainId: 80001,
       accounts: accounts
@@ -45,7 +46,8 @@ const config: HardhatUserConfig = {
   },
   etherscan: {
     apiKey: {
-      moonbaseAlpha: MOONBEAM_API_KEY!
+      moonbaseAlpha: MOONBEAM_API_KEY!,
+      polygonMumbai: POLYGON_API_KEY!
     }
   }
 };
